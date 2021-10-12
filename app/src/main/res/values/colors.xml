@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- colors of this app -->
+    <color name="lightblue400">#29b6f6</color>
+    <color name="lightblue400_dark">#29b6f6</color>
+    <color name="lightblue400_light">#29b6f6</color>
+
+    <color name="lightblue800">#0277bd</color>
+    <color name="lightblue800_dark">#0277bd</color>
+    <color name="lightblue800_light">#0277bd</color>
+
+    <color name="lightblue900">#01579b</color>
+    <color name="lightblue100">#b3e5fc</color>
 </resources>
