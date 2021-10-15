@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".screen.DictionaryFragment"
+    >
+
+    <data>
+    </data>
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSecondary"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".screen.DictionaryFragment">
+   >
 
     <LinearLayout
         android:orientation="vertical"
@@ -48,11 +58,13 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/search_icon"/>
+                    android:src="@drawable/search_icon"
+                    android:contentDescription="@string/dictionary_label" />
 
             </LinearLayout>
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -62,3 +74,5 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

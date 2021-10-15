@@ -4,4 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_name">Huseyin Uslu</string>
     <string name="my_github_link">github.com/huseyin-uslu</string>
+    <string name="dictionary_label">Dictionary Label</string>
+    <string name="about_app">About App</string>
+    <string name="saved_words">Saved Words</string>
 </resources>
