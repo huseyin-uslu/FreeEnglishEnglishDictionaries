@@ -7,4 +7,5 @@
     <string name="dictionary_label">Dictionary Label</string>
     <string name="about_app">About App</string>
     <string name="saved_words">Saved Words</string>
+    <string name="enter_word_hint_text">enter word you don\'t know</string>
 </resources>
