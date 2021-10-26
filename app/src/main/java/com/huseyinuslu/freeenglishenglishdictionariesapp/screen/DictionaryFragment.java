@@ -37,7 +37,7 @@ public class DictionaryFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private DictionaryFragmentViewModel viewModel;
+    private DictionaryFragmentViewModel viewModel = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
