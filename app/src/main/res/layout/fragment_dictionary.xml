@@ -45,6 +45,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
                     android:layout_weight="5"
+                    android:elevation="20dp"
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -64,11 +65,12 @@
             </LinearLayout>
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
-
+            android:id="@+id/recyclerView"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:setHasFixedSize="true"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             android:orientation="vertical"
