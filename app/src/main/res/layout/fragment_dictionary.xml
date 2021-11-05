@@ -39,27 +39,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:importantForAccessibility="no"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/banner" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="30dp"
                     android:layout_gravity="bottom"
-                    android:orientation="horizontal"
-                    android:paddingStart="30dp"
-                    android:paddingEnd="50dp">
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_weight="1.5"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:id="@+id/backHeaderToDictionaryListButton"
+                        android:src="@drawable/back_button"
+                        android:visibility="gone"
+                        android:onClick="@{() -> fragment.setDictionariesList(true)}"
+                        android:contentDescription="@string/back_button" />
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInput_layout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="5"
+                        android:layout_marginStart="15dp"
+                        android:paddingBottom="15dp"
+                        android:layout_weight="10"
                         android:elevation="20dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edittext_you_can_search"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textColor="@color/lightblue900"
                             android:hint="@string/enter_word_hint_text"
                             android:onTextChanged="@{() -> fragment.updateWord()}"
                             android:maxLength="25"
@@ -68,9 +83,10 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+                        android:layout_marginStart="5dp"
                         android:onClick="@{() -> fragment.searchWord()}"
                         android:contentDescription="@string/dictionary_label"
                         android:src="@drawable/search_icon" />
@@ -82,18 +98,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="10dp"
-                android:layout_weight="5"
+                android:layout_weight="4"
                 android:background="@drawable/bg_of_dictionary_list">
+
+                <WebView
+                    android:id="@+id/webViewer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:layout_gravity="center"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
+                    android:layout_gravity="end"
                     android:layout_margin="10dp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="2" />
+                    app:spanCount="2"
+                    android:visibility="visible" />
             </FrameLayout>
 
         </LinearLayout>

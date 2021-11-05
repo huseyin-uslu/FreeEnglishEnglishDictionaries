@@ -1,10 +1,7 @@
 package com.huseyinuslu.freeenglishenglishdictionariesapp.data;
 
 import android.app.Activity;
-
 import com.huseyinuslu.freeenglishenglishdictionariesapp.R;
-
-import java.util.List;
 
 public class DictionaryData {
 
@@ -46,5 +43,12 @@ public class DictionaryData {
 
         };
         return data;
+    }
+
+    public static String[] irregularLinkDictionariesArray() {
+        String[] array = new String[]{
+                "Macmillan","Longman","Oxford","Collins"
+        };
+        return array;
     }
 }

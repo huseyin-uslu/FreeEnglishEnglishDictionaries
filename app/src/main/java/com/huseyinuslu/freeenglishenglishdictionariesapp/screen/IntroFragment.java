@@ -35,7 +35,7 @@ public class IntroFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        new CountDownTimer(3000, 1000) {
+        new CountDownTimer(2500, 1000) {
             @Override
             public void onTick(long l) {
 
@@ -47,9 +47,6 @@ public class IntroFragment extends Fragment {
                         .navigate(R.id.action_introFragment_to_dictionaryFragment);
             }
         }.start();
-
-
-
     }
 
     @Override

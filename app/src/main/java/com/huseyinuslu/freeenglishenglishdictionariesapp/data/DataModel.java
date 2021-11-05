@@ -1,7 +1,6 @@
 package com.huseyinuslu.freeenglishenglishdictionariesapp.data;
 
 import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 
 public class DataModel {
