@@ -30,7 +30,6 @@ public class DictionaryFragment extends Fragment {
     private DictionaryFragmentViewModel viewModel;
     private FragmentDictionaryBinding binding;
 
-
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
@@ -135,6 +134,7 @@ public class DictionaryFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         WebView webV = binding.webViewer;
+        binding = null;
         webV.clearFormData();
         webV.clearHistory();
         webV.clearMatches();

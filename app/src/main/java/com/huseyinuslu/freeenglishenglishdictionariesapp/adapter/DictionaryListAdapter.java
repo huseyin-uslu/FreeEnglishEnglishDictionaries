@@ -16,17 +16,18 @@ import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DataModel;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DictionaryData;
 
 import java.util.ArrayList;
-
+/** an adapter of the dictionaries list */
 public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAdapter.ViewHolder>{
-    private final Activity context;
-    private final DataModel[] dictionaries;
-    private int selectedDictionary;
 
-    public  final ArrayList<ViewHolder> viewHolders = new ArrayList<>();
+    private final Activity context; //the activity for passing into some methods.
+    private final DataModel[] dictionaries; // the instanstatic dictionaries list
+    private int   selectedDictionary; //the selected dictionary
+
+    public final ArrayList<ViewHolder> viewHolders = new ArrayList<>();
 
     public final OnDictionaryClicked onClicked;
 
-    public interface OnDictionaryClicked{
+    public interface OnDictionaryClicked{ //linking with MVVM simultaneously..
         void onClick(@NonNull Integer position);
     }
 
@@ -51,7 +52,7 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
 
         viewHolders.add(holder);
 
-        if(selectedDictionary <= position){
+        if(selectedDictionary == position){
             checkInbox(selectedDictionary);
         }
 
@@ -70,7 +71,6 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
         }
         viewHolders.get(holderIndex).radioButton.setChecked(true);
         selectedDictionary = holderIndex;
-        //send the view
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.huseyinuslu.freeenglishenglishdictionariesapp.R;
 
 public class DictionaryData {
 
+    //data
     public static DataModel[] getData(Activity activity){
 
         DataModel[] data  = new DataModel[]{
@@ -45,6 +46,8 @@ public class DictionaryData {
         return data;
     }
 
+    /** Some dictionaries have irregular link structures so that
+     * we use them to be fit in the appropriate and useful way ,thus.*/
     public static String[] irregularLinkDictionariesArray() {
         String[] array = new String[]{
                 "Macmillan","Longman","Oxford","Collins"
