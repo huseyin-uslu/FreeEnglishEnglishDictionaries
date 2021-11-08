@@ -23,6 +23,6 @@
     <string name="macmillan_link">https://www.macmillandictionary.com/dictionary/british/%s</string>
     <string name="error_text">type something in</string>
     <string name="title_of_alert">About The App</string>
-    <string name="message_of_alert">   This app was coded by Huseyin Uslu on the 5th of October 2021. \n \n [Open Source] - The Dictionary App \n e-mail: 1st.huseyin.uslu@gmail.com</string>
+    <string name="message_of_alert">   This app was prepared by Huseyin Uslu on the 5th of October 2021. \n \n [Open Source] - The Free Dictionary App \n e-mail: 1st.huseyin.uslu@gmail.com \n access code: www.github.com/huseyin-uslu/FreeEnglishEnglishDictionaries</string>
     <string name="back_button">back button</string>
 </resources>

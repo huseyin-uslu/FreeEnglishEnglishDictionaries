@@ -105,15 +105,15 @@
                     android:id="@+id/webViewer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:loadUrl="@{@string/my_github_link}"
+                    app:loadUrl="@{@string/google_link(@string/app_name)}"
                     android:visibility="gone"
                     android:layout_gravity="center"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="end"
+                    android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
