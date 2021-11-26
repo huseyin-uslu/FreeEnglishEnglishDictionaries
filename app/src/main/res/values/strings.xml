@@ -5,6 +5,7 @@
     <string name="about_app">About App</string>
     <string name="saved_words">Saved Words</string>
     <string name="enter_word_hint_text">enter word you don\'t know</string>
+
     <string name="cambridge_dictionary_name">Cambridge</string>
     <string name="google_dictionary_name">Google</string>
     <string name="oxford_dictionary_name">Oxford</string>
@@ -13,16 +14,30 @@
     <string name="urban_dictionary_name">Urban</string>
     <string name="dictionary_dictionary_name">Dictionary</string>
     <string name="macmillian_dictionary_name">Macmillan</string>
+    <string name="merriam_dictionary_name">Merriam-Webster</string>
+    <string name="lexico_dictionary_name">Lexico</string>
+    <string name="wordreference_dictionary_name">WordReference</string>
+    <string name="thefreedictionary_dictionary_name">TheFreeDictionary</string>
+    <string name="yourdictionary_dictionary_name">YourDictionary</string>
+    <string name="vocabulary_dictionary_name">Vocabulary</string>
+
     <string name="dictionary_link">https://www.dictionary.com/browse/%s</string>
     <string name="google_link">https://www.google.com/search?q=%1$s meaning</string>
     <string name="cambridge_link">https://dictionary.cambridge.org/dictionary/english/%s</string>
     <string name="oxford_link">https://www.oxfordlearnersdictionaries.com/definition/english/%s</string>
     <string name="longman_link">https://www.ldoceonline.com/dictionary/%s</string>
+    <string name="macmillan_link">https://www.macmillandictionary.com/dictionary/british/%s</string>
     <string name="collins_link">https://www.collinsdictionary.com/dictionary/english/%s</string>
     <string name="urban_link">https://www.urbandictionary.com/define.php?term=%s </string>
-    <string name="macmillan_link">https://www.macmillandictionary.com/dictionary/british/%s</string>
+    <string name="merriam_link">https://www.merriam-webster.com/dictionary/%s</string>
+    <string name="lexico_link">https://www.lexico.com/definition/%s</string>
+    <string name="wordreference_link">https://www.wordreference.com/definition/%s</string>
+    <string name="thefreedictionary_link">https://www.thefreedictionary.com/%s</string>
+    <string name="yourdictionary_link">https://www.yourdictionary.com/%s</string>
+    <string name="vocabulary_link">https://www.vocabulary.com/dictionary/%s</string>
+
     <string name="error_text">type something in</string>
     <string name="title_of_alert">About The App</string>
-    <string name="message_of_alert">   This app was prepared by Huseyin Uslu on the 5th of October 2021. \n \n [Open Source] - The Free Dictionary App \n e-mail: 1st.huseyin.uslu@gmail.com \n access code: www.github.com/huseyin-uslu/FreeEnglishEnglishDictionaries</string>
+    <string name="message_of_alert">     🤗 [Open Source] 🤗 \n The Free Dictionary App \n \n  👍  [e-mail] \n 1st.huseyin.uslu@gmail.com \n \n  👍  Prepared by Huseyin Uslu on the 5th of October 2021.  </string>
     <string name="back_button">back button</string>
 </resources>

@@ -1,5 +1,8 @@
 package com.huseyinuslu.freeenglishenglishdictionariesapp.screen;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+
+import android.content.ClipboardManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,16 +13,22 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.huseyinuslu.freeenglishenglishdictionariesapp.R;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.adapter.DictionaryListAdapter;
+import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DictionaryData;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.databinding.FragmentDictionaryBinding;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.viewmodel.DictionaryFragmentViewModel;
 
@@ -62,17 +71,39 @@ public class DictionaryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        bindedDataMovements();
+        webViewerSettings();
+    }
+
+    private void bindedDataMovements(){
         DictionaryListAdapter adapter = new DictionaryListAdapter(requireActivity(),viewModel.getIndexNumber(),(index) -> {
             viewModel.setSelectedDictionary(index);
         });
 
-        binding.setViewModel(viewModel);
-        binding.setFragment(this);
-        binding.setLifecycleOwner(getViewLifecycleOwner());
-        binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.setHasFixedSize(true);
+        //this is for the the edit text which gives you suggestions for you finding the correct word.
+        ArrayAdapter<String> wordAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,viewModel.wordList);
+        binding.edittextYouCanSearch.setAdapter(wordAdapter);
 
-        webViewerSettings();
+        binding.setFragment(this);
+        binding.setViewModel(viewModel);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
+
+        //dictionary list with recyclerview
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setItemViewCacheSize(DictionaryData.getData().length);
+
+        adapter.setHasStableIds(true);
+        binding.recyclerView.setAdapter(adapter);
+
+        setDictionariesList(viewModel.dictionaryListState.getValue());
+        viewModel.dictionaryListState.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                setDictionariesList(aBoolean);
+            }
+        });
+
+        clipboardListener();
     }
 
     public void searchWord(){
@@ -80,7 +111,7 @@ public class DictionaryFragment extends Fragment {
             setError(true);
         }else{
             setError(false);
-            setDictionariesList(false);
+            viewModel.setDictionaryListState(false);
             binding.webViewer.loadUrl(viewModel.getLink());
         }
     }
@@ -91,7 +122,6 @@ public class DictionaryFragment extends Fragment {
         settings.setJavaScriptEnabled(true);
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
-        settings.setSupportZoom(true);
         settings.setDomStorageEnabled(true);
     }
 
@@ -124,10 +154,26 @@ public class DictionaryFragment extends Fragment {
         if(error){
             binding.textInputLayout.setError(Objects.requireNonNull(getString(R.string.error_text)));
             binding.textInputLayout.setErrorEnabled(true);
+
         }else{
             binding.textInputLayout.setError(null);
             binding.textInputLayout.setErrorEnabled(false);
         }
+    }
+
+    private void clipboardListener(){
+        final ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(CLIPBOARD_SERVICE);
+        clipboard.addPrimaryClipChangedListener(new ClipboardManager.OnPrimaryClipChangedListener() {
+          CharSequence text;
+            public void onPrimaryClipChanged() {
+                int itemCount = clipboard.getPrimaryClip().getItemCount();
+
+                if(itemCount > 0){
+                    text = clipboard.getPrimaryClip().getItemAt(0).getText();
+                    viewModel.setWord(text.toString());
+                }
+            }
+        });
     }
 
     @Override

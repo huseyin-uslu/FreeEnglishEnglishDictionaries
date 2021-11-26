@@ -1,6 +1,7 @@
 package com.huseyinuslu.freeenglishenglishdictionariesapp.adapter;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.huseyinuslu.freeenglishenglishdictionariesapp.R;
@@ -33,7 +35,7 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
 
     public DictionaryListAdapter (@NonNull Activity context, int selectedDictionary , @NonNull OnDictionaryClicked onClicked){
         this.context = context;
-        this.dictionaries = DictionaryData.getData(context);
+        this.dictionaries = DictionaryData.getData();
         this.onClicked = onClicked;
         this.selectedDictionary = selectedDictionary;
     }
@@ -43,7 +45,6 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.item_of_dictionarieslist,parent,false);
-
         return new ViewHolder(view);
     }
 
@@ -56,7 +57,12 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
             checkInbox(selectedDictionary);
         }
 
-        holder.imageView.setImageResource(dictionaries[position].getImageResource());
+
+        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(),dictionaries[position].getImageResource(),null);
+        holder.imageView.setImageDrawable(drawable);
+   //     -  Arza burada...!!
+
+
         holder.textView.setText(dictionaries[position].getName());
 
         holder.radioButton.setOnClickListener(view -> {
@@ -90,5 +96,15 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
            textView    = itemView.findViewById(R.id.textViewInEachItem);
            imageView   = itemView.findViewById(R.id.imageViewInEachItem);
         }
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 }
