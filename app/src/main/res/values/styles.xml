@@ -3,7 +3,7 @@
     <style name="PrimaryTextView" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">?attr/colorOnSecondary</item>
         <item name="android:padding">5dp</item>
-        <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+        <item name="android:textAppearance">?attr/textAppearanceBody2</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="UsluRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">

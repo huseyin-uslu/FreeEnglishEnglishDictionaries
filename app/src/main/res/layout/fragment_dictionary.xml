@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".screen.DictionaryFragment">
 
@@ -12,15 +12,15 @@
 
         <variable
             name="fragment"
-            type="com.huseyinuslu.freeenglishenglishdictionariesapp.screen.DictionaryFragment"/>
+            type="com.huseyinuslu.freeenglishenglishdictionariesapp.screen.DictionaryFragment" />
     </data>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="?attr/colorSecondary"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,21 +41,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="30dp"
-                android:layout_gravity="bottom"
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/backHeaderToDictionaryListButton"
                     android:layout_width="0dp"
-                    android:layout_weight="1.5"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:id="@+id/backHeaderToDictionaryListButton"
-                    android:src="@drawable/back_button"
-                    android:visibility="gone"
+                    android:layout_weight="1.3"
+                    android:contentDescription="@string/back_button"
                     android:onClick="@{() -> viewModel.setDictionaryListState(true)}"
-                    android:contentDescription="@string/back_button" />
+                    android:src="@drawable/cancel_button"
+                    android:visibility="invisible" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInput_layout"
@@ -70,24 +70,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:completionThreshold="2"
-                        android:text="@{viewModel.word()}"
-                        android:padding="15dp"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorOnSecondary"
                         android:hint="@string/enter_word_hint_text"
-                        android:onTextChanged="@{() -> fragment.updateWord()}"
                         android:maxLength="25"
-                        android:singleLine="true" />
+                        android:onTextChanged="@{() -> fragment.updateWord()}"
+                        android:padding="15dp"
+                        android:singleLine="true"
+                        android:text="@{viewModel.word()}"
+                        android:textColor="?attr/colorSecondaryVariant"
+                        android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:layout_marginStart="5dp"
-                    android:onClick="@{() -> fragment.searchWord()}"
+                    android:layout_weight="1"
                     android:contentDescription="@string/dictionary_label"
+                    android:onClick="@{() -> fragment.searchWord()}"
                     android:src="@drawable/search_icon" />
 
             </LinearLayout>
@@ -98,57 +98,70 @@
             android:layout_height="0dp"
             android:layout_margin="10dp"
             android:layout_weight="5"
-            android:orientation="vertical"
-            android:background="@drawable/bg_of_dictionary_list">
+            android:background="@drawable/bg_of_dictionary_list"
+            android:orientation="vertical">
 
             <FrameLayout
                 android:id="@+id/webViewerIndicator"
-                android:visibility="gone"
-                tools:visibility="visible"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:visibility="visible">
+
                 <WebView
                     android:id="@+id/webViewer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:loadUrl="@{viewModel.fullLink()}"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:visibility="visible"
+                    app:loadUrl="@{viewModel.fullLink()}" />
 
                 <LinearLayout
-                    android:layout_gravity="bottom"
-                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@color/lightblue900"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:orientation="horizontal">
 
                     <ImageButton
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@color/lightblue900"/>
+                        android:id="@+id/backHeadButtonOnWebViewer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="?attr/colorOnSecondary"
+                        android:onClick="@{() -> fragment.backHeadButtonWebviewer()}"
+                        android:src="@drawable/back_button"
+                        android:contentDescription="@string/back_button_description" />
+
+                    <ImageButton
+                        android:id="@+id/refreshButtonOnWebViewer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="?attr/colorOnSecondary"
+                        android:onClick="@{() -> fragment.refreshButtonWebviewer()}"
+                        android:src="@drawable/refresh_button"
+                        android:contentDescription="@string/refresh_button_description" />
+
+                    <ProgressBar
+                        android:id="@+id/refreshIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="?attr/colorOnSecondary"
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </FrameLayout>
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                tools:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                tools:itemCount="7"
-                tools:listitem="@layout/item_of_dictionarieslist"
                 android:orientation="vertical"
+                android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
-                android:visibility="visible" />
+                tools:itemCount="7"
+                tools:listitem="@layout/item_of_dictionarieslist" />
         </LinearLayout>
     </LinearLayout>
 

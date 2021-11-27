@@ -15,48 +15,61 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.20"/>
+            app:layout_constraintGuide_percent="0.20" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/left_guideline_of_intro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.25"/>
+            app:layout_constraintGuide_percent="0.25" />
 
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_guideline_of_intro"
-            app:layout_constraintEnd_toStartOf="@+id/right_guideline_of_intro"
-            app:layout_constraintStart_toStartOf="@+id/left_guideline_of_intro"
-            app:layout_constraintTop_toTopOf="@+id/top_guideline_of_intro">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 style="@style/PrimaryTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="15"
+                android:text="@string/app_name"
+                android:gravity="bottom"
+                android:textAppearance="?attr/textAppearanceHeadline5" />
+
+            <View
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="@string/app_name"
-                android:textAlignment="center" />
+                android:background="?attr/colorOnPrimary"
+                android:src="@color/lightblue900" />
 
             <ImageView
-                android:src="@drawable/kutahya_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
                 android:importantForAccessibility="no"
-                android:layout_weight="5"
+                android:src="@drawable/kutahya_icon" />
+
+            <View
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_width="match_parent" />
+                android:layout_weight="1"
+                android:background="?attr/colorOnPrimary" />
 
             <TextView
                 style="@style/PrimaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@string/my_github_link"
-                android:textAlignment="center" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="15"
+                android:text="@string/my_github_link" />
 
         </LinearLayout>
 
@@ -65,13 +78,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.75"/>
+            app:layout_constraintGuide_percent="0.75" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottom_guideline_of_intro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.70"/>
+            app:layout_constraintGuide_percent="0.70" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

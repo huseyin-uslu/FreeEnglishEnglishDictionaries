@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class DictionaryData {
+
     //data
     private static final List<String> WORDS = new ArrayList<String>();
     private static final String mPath = "words.txt";

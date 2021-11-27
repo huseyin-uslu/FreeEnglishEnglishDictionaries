@@ -4,6 +4,7 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 
 import android.content.ClipboardManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,15 +15,12 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -38,6 +36,7 @@ public class DictionaryFragment extends Fragment {
 
     private DictionaryFragmentViewModel viewModel;
     private FragmentDictionaryBinding binding;
+    private WebView webV;
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -71,13 +70,20 @@ public class DictionaryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bindedDataMovements();
         webViewerSettings();
+        bindedDataMovements();
     }
 
+
     private void bindedDataMovements(){
-        DictionaryListAdapter adapter = new DictionaryListAdapter(requireActivity(),viewModel.getIndexNumber(),(index) -> {
-            viewModel.setSelectedDictionary(index);
+
+        String dictionaryName = requireActivity().getResources().getString(viewModel.selectedDictionaryItem().getValue().getName());
+
+        DictionaryListAdapter adapter = new DictionaryListAdapter(requireActivity(), dictionaryName, new DictionaryListAdapter.OnDictionaryClicked() {
+            @Override
+            public void onClick(int selectedIndex) {
+                viewModel.setIndexNumber(selectedIndex);
+            }
         });
 
         //this is for the the edit text which gives you suggestions for you finding the correct word.
@@ -91,8 +97,6 @@ public class DictionaryFragment extends Fragment {
         //dictionary list with recyclerview
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setItemViewCacheSize(DictionaryData.getData().length);
-
-        adapter.setHasStableIds(true);
         binding.recyclerView.setAdapter(adapter);
 
         setDictionariesList(viewModel.dictionaryListState.getValue());
@@ -112,37 +116,40 @@ public class DictionaryFragment extends Fragment {
         }else{
             setError(false);
             viewModel.setDictionaryListState(false);
-            binding.webViewer.loadUrl(viewModel.getLink());
+            viewModel.refreshLink();
         }
     }
 
-    private void webViewerSettings(){
-        binding.webViewer.setWebViewClient(new WebViewClient());
-        WebSettings settings = binding.webViewer.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setLoadWithOverviewMode(true);
-        settings.setUseWideViewPort(true);
-        settings.setDomStorageEnabled(true);
+    public void backHeadButtonWebviewer(){
+       if(webV.canGoBack()){
+           webV.goBack();
+       }
+    }
+
+    public void refreshButtonWebviewer(){
+        System.out.println("orjinal URL: " + webV.getOriginalUrl());
+        binding.refreshButtonOnWebViewer.setVisibility(View.GONE);
+        binding.refreshIndicator.setVisibility(View.VISIBLE);
+        countDownTimer(3000, 1000, new VoidParameter() {
+            @Override
+            public void voidParameter() {
+                binding.refreshButtonOnWebViewer.setVisibility(View.VISIBLE);
+                binding.refreshIndicator.setVisibility(View.GONE);
+            }
+        });
+        webV.reload();
     }
 
     public void setDictionariesList(boolean canBeSeen){
         if(canBeSeen){
             binding.recyclerView.setVisibility(View.VISIBLE);
-            binding.webViewer.setVisibility(View.GONE);
+            binding.webViewerIndicator.setVisibility(View.GONE);
             binding.backHeaderToDictionaryListButton.setVisibility(View.GONE);
         }else{
             binding.backHeaderToDictionaryListButton.setVisibility(View.VISIBLE);
-            binding.webViewer.setVisibility(View.VISIBLE);
+            binding.webViewerIndicator.setVisibility(View.VISIBLE);
             binding.recyclerView.setVisibility(View.GONE);
         }
-    }
-
-    private void alertDialog(String title,String message){
-        new AlertDialog.Builder(requireActivity())
-                .setTitle(title)
-                .setMessage(message)
-                .setIcon(R.drawable.logo_icon)
-                .show();
     }
 
     public void updateWord(){
@@ -161,16 +168,55 @@ public class DictionaryFragment extends Fragment {
         }
     }
 
+    private void webViewerSettings(){
+        webV = binding.webViewer;
+        webV.setWebViewClient(new WebViewClient());
+
+        WebSettings settings = webV.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        settings.setDomStorageEnabled(true);
+    }
+
+    private void countDownTimer(long millis, long countDownInterval,VoidParameter method) {
+        new CountDownTimer(millis,countDownInterval) {
+            @Override
+            public void onTick(long l) {
+                //nothing
+            }
+
+            @Override
+            public void onFinish() {
+                method.voidParameter();
+            }
+        }.start();
+    }
+
+    private interface VoidParameter {
+        void voidParameter();
+    }
+
+    private void alertDialog(String title,String message){
+        new AlertDialog.Builder(requireActivity())
+                .setTitle(title)
+                .setMessage(message)
+                .setIcon(R.drawable.logo_icon)
+                .show();
+    }
+
     private void clipboardListener(){
         final ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(CLIPBOARD_SERVICE);
         clipboard.addPrimaryClipChangedListener(new ClipboardManager.OnPrimaryClipChangedListener() {
           CharSequence text;
             public void onPrimaryClipChanged() {
-                int itemCount = clipboard.getPrimaryClip().getItemCount();
+                android.content.ClipData primaryClip = clipboard.getPrimaryClip();
 
-                if(itemCount > 0){
-                    text = clipboard.getPrimaryClip().getItemAt(0).getText();
-                    viewModel.setWord(text.toString());
+                if(primaryClip.getItemCount() > 0){
+                    if(!primaryClip.getItemAt(0).getText().toString().isEmpty()){
+                        text = clipboard.getPrimaryClip().getItemAt(0).getText();
+                        viewModel.setWord(text.toString());
+                    }
                 }
             }
         });
@@ -179,12 +225,11 @@ public class DictionaryFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        WebView webV = binding.webViewer;
-        binding = null;
         webV.clearFormData();
         webV.clearHistory();
         webV.clearMatches();
         webV.clearSslPreferences();
         webV.destroy();
+        binding = null;
     }
 }

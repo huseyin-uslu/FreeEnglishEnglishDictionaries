@@ -1,7 +1,6 @@
 package com.huseyinuslu.freeenglishenglishdictionariesapp.adapter;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,30 +9,33 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.huseyinuslu.freeenglishenglishdictionariesapp.R;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DataModel;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DictionaryData;
 
+
+
 import java.util.ArrayList;
+import java.util.List;
+
 /** an adapter of the dictionaries list */
 public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAdapter.ViewHolder>{
 
     private final Activity context; //the activity for passing into some methods.
     private final DataModel[] dictionaries; // the instanstatic dictionaries list
-    private int   selectedDictionary; //the selected dictionary
+    public  final List<ViewHolder> viewHolders = new ArrayList<>();
+    public  final OnDictionaryClicked onClicked;
 
-    public final ArrayList<ViewHolder> viewHolders = new ArrayList<>();
+    private       String selectedDictionary; //the selected dictionary
 
-    public final OnDictionaryClicked onClicked;
 
     public interface OnDictionaryClicked{ //linking with MVVM simultaneously..
-        void onClick(@NonNull Integer position);
+        void onClick(@NonNull int selectedIndex);
     }
 
-    public DictionaryListAdapter (@NonNull Activity context, int selectedDictionary , @NonNull OnDictionaryClicked onClicked){
+    public DictionaryListAdapter (@NonNull Activity context, String selectedDictionary , @NonNull OnDictionaryClicked onClicked){
         this.context = context;
         this.dictionaries = DictionaryData.getData();
         this.onClicked = onClicked;
@@ -45,38 +47,36 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.item_of_dictionarieslist,parent,false);
+        ViewHolder vHolder = new ViewHolder(view);
+        viewHolders.add(vHolder); //holder filler
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        viewHolders.add(holder);
-
-        if(selectedDictionary == position){
-            checkInbox(selectedDictionary);
-        }
-
-
-        Drawable drawable = ResourcesCompat.getDrawable(context.getResources(),dictionaries[position].getImageResource(),null);
-        holder.imageView.setImageDrawable(drawable);
-   //     -  Arza burada...!!
-
-
+        holder.imageView.setImageResource(dictionaries[position].getImageResource());
         holder.textView.setText(dictionaries[position].getName());
+        checkInbox();
 
         holder.radioButton.setOnClickListener(view -> {
-           checkInbox(holder.getAdapterPosition());
-           onClicked.onClick(selectedDictionary);
+            selectedDictionary = holder.textView.getText().toString();
+            for(int i = 0;i<viewHolders.size();i++){
+                viewHolders.get(i).radioButton.setChecked(false);
+            }
+            checkInbox();
+           onClicked.onClick(holder.getLayoutPosition());
         });
     }
 
-    private void checkInbox(int holderIndex){
-        for(ViewHolder v : viewHolders){
-            v.radioButton.setChecked(false);
+    private void checkInbox(){
+
+        for(ViewHolder vh : viewHolders){
+           if(selectedDictionary.equals(vh.textView.getText().toString())){
+               vh.radioButton.setChecked(true);
+               break;
+           }
         }
-        viewHolders.get(holderIndex).radioButton.setChecked(true);
-        selectedDictionary = holderIndex;
     }
 
     @Override
@@ -107,4 +107,5 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
     public int getItemViewType(int position) {
         return position;
     }
+
 }

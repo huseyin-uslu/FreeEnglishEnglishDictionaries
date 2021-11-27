@@ -9,7 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.huseyinuslu.freeenglishenglishdictionariesapp.adapter.DictionaryListAdapter;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DataModel;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DictionaryData;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.LinkType;
@@ -26,6 +28,7 @@ public class DictionaryFragmentViewModel extends ViewModel {
     private final MutableLiveData<String> word = getWord();
 
     public LiveData<String> word(){
+        refreshLink();
         return this.word;
     }
 
@@ -40,6 +43,10 @@ public class DictionaryFragmentViewModel extends ViewModel {
            public final List<String> wordList = new ArrayList<String>();
 
     private final MutableLiveData<DataModel> selectedDictionaryItem = getSelectedDictionaryItem();
+
+    public LiveData<DataModel> selectedDictionaryItem(){
+        return selectedDictionaryItem;
+    }
 
     private MutableLiveData<DataModel> getSelectedDictionaryItem() {
 
@@ -111,17 +118,9 @@ public class DictionaryFragmentViewModel extends ViewModel {
         fullLink = getFullLink(selectedDictionaryItem.getValue());
     }
 
-    public void setSelectedDictionary(@NonNull Integer index) {
-        selectedDictionaryItem.setValue(data[index]);
-        setIndexNumber(index);
-    }
-
-    public Integer getIndexNumber() {
-        return selectedIndexNumber.getValue();
-    }
-
-    private void setIndexNumber(@NonNull Integer index) {
+    public void setIndexNumber(@NonNull int index) {
         selectedIndexNumber.setValue(index);
+        selectedDictionaryItem.setValue(data[index]);
         sP.edit().putInt(SHARED_INDEX_NUMBER_KEY, index).apply();
     }
 
@@ -129,14 +128,11 @@ public class DictionaryFragmentViewModel extends ViewModel {
         this.word.setValue(word);
     }
 
-    public String getLink() {
-
+    public void refreshLink() {
         DataModel data = selectedDictionaryItem.getValue();
         String worD = word.getValue();
         String link = res.getString(data.getLink(), getWordAccordingtoLink(data.getLinkType(),worD)).toLowerCase(Locale.ROOT);
         fullLink.setValue(link);
-
-        return link;
     }
 
     private String getWordAccordingtoLink(@NonNull LinkType type,@NonNull String word) {

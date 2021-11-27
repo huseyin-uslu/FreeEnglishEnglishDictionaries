@@ -40,4 +40,7 @@
     <string name="title_of_alert">About The App</string>
     <string name="message_of_alert">     🤗 [Open Source] 🤗 \n The Free Dictionary App \n \n  👍  [e-mail] \n 1st.huseyin.uslu@gmail.com \n \n  👍  Prepared by Huseyin Uslu on the 5th of October 2021.  </string>
     <string name="back_button">back button</string>
+
+    <string name="refresh_button_description">Refresh Button</string>
+    <string name="back_button_description">back button description</string>
 </resources>
