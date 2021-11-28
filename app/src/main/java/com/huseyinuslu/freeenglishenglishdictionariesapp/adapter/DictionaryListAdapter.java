@@ -15,21 +15,18 @@ import com.huseyinuslu.freeenglishenglishdictionariesapp.R;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DataModel;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DictionaryData;
 
-
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /** an adapter of the dictionaries list */
 public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAdapter.ViewHolder>{
 
     private final Activity context; //the activity for passing into some methods.
     private final DataModel[] dictionaries; // the instanstatic dictionaries list
-    public  final List<ViewHolder> viewHolders = new ArrayList<>();
+    public  final HashMap<String,ViewHolder> viewHolders = new HashMap<>();
     public  final OnDictionaryClicked onClicked;
+    public boolean isItemChecked = false;
 
     private       String selectedDictionary; //the selected dictionary
-
 
     public interface OnDictionaryClicked{ //linking with MVVM simultaneously..
         void onClick(@NonNull int selectedIndex);
@@ -47,36 +44,39 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.item_of_dictionarieslist,parent,false);
-        ViewHolder vHolder = new ViewHolder(view);
-        viewHolders.add(vHolder); //holder filler
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        String title = context.getResources().getString(dictionaries[position].getName());
+        viewHolders.put(title,holder);//holder filler
+
         holder.imageView.setImageResource(dictionaries[position].getImageResource());
-        holder.textView.setText(dictionaries[position].getName());
-        checkInbox();
+        holder.textView.setText(title);
+
+        if(!isItemChecked){
+        if(title.equals(selectedDictionary)){
+            holder.radioButton.setChecked(true);
+            isItemChecked = true;
+        }}
 
         holder.radioButton.setOnClickListener(view -> {
             selectedDictionary = holder.textView.getText().toString();
-            for(int i = 0;i<viewHolders.size();i++){
-                viewHolders.get(i).radioButton.setChecked(false);
+
+            if(viewHolders.containsKey(selectedDictionary)){
+
+                    for(ViewHolder vh : viewHolders.values()){
+                        vh.radioButton.setChecked(false);
+                        if(!vh.equals(holder))
+                            continue;
+                        vh.radioButton.setChecked(true);
+                    }
+
+                onClicked.onClick(holder.getLayoutPosition());
             }
-            checkInbox();
-           onClicked.onClick(holder.getLayoutPosition());
         });
-    }
-
-    private void checkInbox(){
-
-        for(ViewHolder vh : viewHolders){
-           if(selectedDictionary.equals(vh.textView.getText().toString())){
-               vh.radioButton.setChecked(true);
-               break;
-           }
-        }
     }
 
     @Override

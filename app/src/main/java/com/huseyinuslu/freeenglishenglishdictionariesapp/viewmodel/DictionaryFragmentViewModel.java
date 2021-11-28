@@ -9,17 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.huseyinuslu.freeenglishenglishdictionariesapp.adapter.DictionaryListAdapter;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DataModel;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DictionaryData;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.LinkType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
+
 
 public class DictionaryFragmentViewModel extends ViewModel {
 
