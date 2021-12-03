@@ -3,6 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/USLU_/Desktop/coding/project/google play/Free English Dictionary/project/FreeEnglishEnglishDictionariesApp/app/src/main/res/drawable/back_button.xml" value="0.12222222222222222" />
+        <entry key="..\:/Users/USLU_/Desktop/coding/project/google play/Free English Dictionary/project/FreeEnglishEnglishDictionariesApp/app/src/main/res/drawable/cancel_button.xml" value="0.12222222222222222" />
+        <entry key="..\:/Users/USLU_/Desktop/coding/project/google play/Free English Dictionary/project/FreeEnglishEnglishDictionariesApp/app/src/main/res/drawable/info_about_app_menu_icon.xml" value="0.12222222222222222" />
+        <entry key="..\:/Users/USLU_/Desktop/coding/project/google play/Free English Dictionary/project/FreeEnglishEnglishDictionariesApp/app/src/main/res/drawable/logo_icon.xml" value="0.12222222222222222" />
+        <entry key="..\:/Users/USLU_/Desktop/coding/project/google play/Free English Dictionary/project/FreeEnglishEnglishDictionariesApp/app/src/main/res/drawable/refresh_button.xml" value="0.12222222222222222" />
+        <entry key="..\:/Users/USLU_/Desktop/coding/project/google play/Free English Dictionary/project/FreeEnglishEnglishDictionariesApp/app/src/main/res/drawable/search_icon.xml" value="0.12222222222222222" />
+        <entry key="..\:/Users/USLU_/Desktop/coding/project/google play/Free English Dictionary/project/FreeEnglishEnglishDictionariesApp/app/src/main/res/layout/activity_main.xml" value="0.16822916666666668" />
+        <entry key="..\:/Users/USLU_/Desktop/coding/project/google play/Free English Dictionary/project/FreeEnglishEnglishDictionariesApp/app/src/main/res/layout/fragment_dictionary.xml" value="0.22" />
+        <entry key="..\:/Users/USLU_/Desktop/coding/project/google play/Free English Dictionary/project/FreeEnglishEnglishDictionariesApp/app/src/main/res/layout/fragment_intro.xml" value="0.22" />
+        <entry key="..\:/Users/USLU_/Desktop/coding/project/google play/Free English Dictionary/project/FreeEnglishEnglishDictionariesApp/app/src/main/res/layout/item_of_dictionarieslist.xml" value="0.13333333333333333" />
+        <entry key="..\:/Users/USLU_/Desktop/coding/project/google play/Free English Dictionary/project/FreeEnglishEnglishDictionariesApp/app/src/main/res/menu/main_menu.xml" value="0.16822916666666668" />
         <entry key="..\:/Users/USLU_/Desktop/coding/project/temporary/FreeEnglishEnglishDictionariesApp/app/src/main/res/drawable/back_button.xml" value="0.1" />
         <entry key="..\:/Users/USLU_/Desktop/coding/project/temporary/FreeEnglishEnglishDictionariesApp/app/src/main/res/drawable/bg_of_dictionary_list.xml" value="0.18611111111111112" />
         <entry key="..\:/Users/USLU_/Desktop/coding/project/temporary/FreeEnglishEnglishDictionariesApp/app/src/main/res/drawable/ic_baseline_fingerprint_24.xml" value="0.12222222222222222" />
