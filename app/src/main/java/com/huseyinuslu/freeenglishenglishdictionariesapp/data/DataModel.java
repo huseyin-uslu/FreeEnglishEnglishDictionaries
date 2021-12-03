@@ -10,11 +10,11 @@ public class DataModel {
     private final int link;
     private final LinkType linkType;
 
-   public DataModel(
-           @StringRes int name,
-           @DrawableRes int imageResource,
-           @StringRes int link,
-           @NonNull LinkType linkType){
+    public DataModel(
+            @StringRes int name,
+            @DrawableRes int imageResource,
+            @StringRes int link,
+            @NonNull LinkType linkType) {
         this.name = name;
         this.imageResource = imageResource;
         this.link = link;
@@ -33,5 +33,7 @@ public class DataModel {
         return link;
     }
 
-    public LinkType getLinkType(){return linkType;}
+    public LinkType getLinkType() {
+        return linkType;
+    }
 }

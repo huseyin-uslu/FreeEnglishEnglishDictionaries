@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-
 import com.huseyinuslu.freeenglishenglishdictionariesapp.R;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.databinding.FragmentIntroBinding;
 
@@ -23,7 +22,8 @@ public class IntroFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-   private FragmentIntroBinding binding = null;
+    private FragmentIntroBinding binding = null;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

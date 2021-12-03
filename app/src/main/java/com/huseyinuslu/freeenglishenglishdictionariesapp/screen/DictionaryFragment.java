@@ -46,7 +46,7 @@ public class DictionaryFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_item_about_app) {
-            alertDialog(getString(R.string.title_of_alert),getString(R.string.message_of_alert));
+            alertDialog(getString(R.string.title_of_alert), getString(R.string.message_of_alert));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -75,7 +75,7 @@ public class DictionaryFragment extends Fragment {
     }
 
 
-    private void bindedDataMovements(){
+    private void bindedDataMovements() {
 
         String dictionaryName = requireActivity().getResources().getString(viewModel.selectedDictionaryItem().getValue().getName());
 
@@ -87,7 +87,7 @@ public class DictionaryFragment extends Fragment {
         });
 
         //this is for the the edit text which gives you suggestions for you finding the correct word.
-        ArrayAdapter<String> wordAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,viewModel.wordList);
+        ArrayAdapter<String> wordAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, viewModel.wordList);
         binding.edittextYouCanSearch.setAdapter(wordAdapter);
 
         binding.setFragment(this);
@@ -110,24 +110,26 @@ public class DictionaryFragment extends Fragment {
         clipboardListener();
     }
 
-    public void searchWord(){
-        if(Objects.requireNonNull(binding.edittextYouCanSearch.getText()).toString().isEmpty()){
+    public void searchWord() {
+        if (Objects.requireNonNull(binding.edittextYouCanSearch.getText()).toString().isEmpty()) {
             setError(true);
-        }else{
+        } else {
             setError(false);
-            viewModel.setDictionaryListState(false);
-            viewModel.refreshLink();
+            if (viewModel.dictionaryListState.getValue()) {
+                viewModel.setDictionaryListState(false);
+            } else {
+                viewModel.refreshLink();
+            }
         }
     }
 
-    public void backHeadButtonWebviewer(){
-       if(webV.canGoBack()){
-           webV.goBack();
-       }
+    public void backHeadButtonWebviewer() {
+        if (webV.canGoBack()) {
+            webV.goBack();
+        }
     }
 
-    public void refreshButtonWebviewer(){
-        System.out.println("orjinal URL: " + webV.getOriginalUrl());
+    public void refreshButtonWebviewer() {
         binding.refreshButtonOnWebViewer.setVisibility(View.GONE);
         binding.refreshIndicator.setVisibility(View.VISIBLE);
         countDownTimer(3000, 1000, new VoidParameter() {
@@ -140,35 +142,43 @@ public class DictionaryFragment extends Fragment {
         webV.reload();
     }
 
-    public void setDictionariesList(boolean canBeSeen){
-        if(canBeSeen){
+    public void setDictionariesList(boolean canBeSeen) {
+        if (canBeSeen) {
             binding.recyclerView.setVisibility(View.VISIBLE);
-            binding.webViewerIndicator.setVisibility(View.GONE);
             binding.backHeaderToDictionaryListButton.setVisibility(View.GONE);
-        }else{
+            binding.webViewerIndicator.setVisibility(View.GONE);
+            binding.webViewer.setVisibility(View.GONE);
+            binding.refreshIndicator.setVisibility(View.GONE);
+            binding.refreshButtonOnWebViewer.setVisibility(View.GONE);
+            binding.backHeadButtonOnWebViewer.setVisibility(View.GONE);
+
+        } else {
+            binding.recyclerView.setVisibility(View.GONE);
             binding.backHeaderToDictionaryListButton.setVisibility(View.VISIBLE);
             binding.webViewerIndicator.setVisibility(View.VISIBLE);
-            binding.recyclerView.setVisibility(View.GONE);
+            binding.webViewer.setVisibility(View.VISIBLE);
+            binding.refreshButtonOnWebViewer.setVisibility(View.VISIBLE);
+            binding.backHeadButtonOnWebViewer.setVisibility(View.VISIBLE);
         }
     }
 
-    public void updateWord(){
+    public void updateWord() {
         setError(false);
         viewModel.setWord(Objects.requireNonNull(binding.edittextYouCanSearch.getText()).toString());
     }
 
-    private void setError(boolean error){
-        if(error){
+    private void setError(boolean error) {
+        if (error) {
             binding.textInputLayout.setError(Objects.requireNonNull(getString(R.string.error_text)));
             binding.textInputLayout.setErrorEnabled(true);
 
-        }else{
+        } else {
             binding.textInputLayout.setError(null);
             binding.textInputLayout.setErrorEnabled(false);
         }
     }
 
-    private void webViewerSettings(){
+    private void webViewerSettings() {
         webV = binding.webViewer;
         webV.setWebViewClient(new WebViewClient());
 
@@ -179,8 +189,8 @@ public class DictionaryFragment extends Fragment {
         settings.setDomStorageEnabled(true);
     }
 
-    private void countDownTimer(long millis, long countDownInterval,VoidParameter method) {
-        new CountDownTimer(millis,countDownInterval) {
+    private void countDownTimer(long millis, long countDownInterval, VoidParameter method) {
+        new CountDownTimer(millis, countDownInterval) {
             @Override
             public void onTick(long l) {
                 //nothing
@@ -197,7 +207,7 @@ public class DictionaryFragment extends Fragment {
         void voidParameter();
     }
 
-    private void alertDialog(String title,String message){
+    private void alertDialog(String title, String message) {
         new AlertDialog.Builder(requireActivity())
                 .setTitle(title)
                 .setMessage(message)
@@ -205,15 +215,16 @@ public class DictionaryFragment extends Fragment {
                 .show();
     }
 
-    private void clipboardListener(){
+    private void clipboardListener() {
         final ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(CLIPBOARD_SERVICE);
         clipboard.addPrimaryClipChangedListener(new ClipboardManager.OnPrimaryClipChangedListener() {
-          CharSequence text;
+            CharSequence text;
+
             public void onPrimaryClipChanged() {
                 android.content.ClipData primaryClip = clipboard.getPrimaryClip();
 
-                if(primaryClip.getItemCount() > 0){
-                    if(!primaryClip.getItemAt(0).getText().toString().isEmpty()){
+                if (primaryClip.getItemCount() > 0) {
+                    if (!primaryClip.getItemAt(0).getText().toString().isEmpty()) {
                         text = clipboard.getPrimaryClip().getItemAt(0).getText();
                         viewModel.setWord(text.toString());
                     }

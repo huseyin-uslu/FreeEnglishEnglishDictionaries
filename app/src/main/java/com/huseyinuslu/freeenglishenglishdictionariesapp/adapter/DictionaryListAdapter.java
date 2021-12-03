@@ -17,22 +17,24 @@ import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DictionaryData;
 
 import java.util.HashMap;
 
-/** an adapter of the dictionaries list */
-public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAdapter.ViewHolder>{
+/**
+ * an adapter of the dictionaries list
+ */
+public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAdapter.ViewHolder> {
 
     private final Activity context; //the activity for passing into some methods.
     private final DataModel[] dictionaries; // the instanstatic dictionaries list
-    public  final HashMap<String,ViewHolder> viewHolders = new HashMap<>();
-    public  final OnDictionaryClicked onClicked;
+    public final HashMap<String, ViewHolder> viewHolders = new HashMap<>();
+    public final OnDictionaryClicked onClicked;
     public boolean isItemChecked = false;
 
-    private       String selectedDictionary; //the selected dictionary
+    private String selectedDictionary; //the selected dictionary
 
-    public interface OnDictionaryClicked{ //linking with MVVM simultaneously..
+    public interface OnDictionaryClicked { //linking with MVVM simultaneously..
         void onClick(@NonNull int selectedIndex);
     }
 
-    public DictionaryListAdapter (@NonNull Activity context, String selectedDictionary , @NonNull OnDictionaryClicked onClicked){
+    public DictionaryListAdapter(@NonNull Activity context, String selectedDictionary, @NonNull OnDictionaryClicked onClicked) {
         this.context = context;
         this.dictionaries = DictionaryData.getData();
         this.onClicked = onClicked;
@@ -43,7 +45,7 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = context.getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.item_of_dictionarieslist,parent,false);
+        View view = layoutInflater.inflate(R.layout.item_of_dictionarieslist, parent, false);
         return new ViewHolder(view);
     }
 
@@ -51,28 +53,29 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         String title = context.getResources().getString(dictionaries[position].getName());
-        viewHolders.put(title,holder);//holder filler
+        viewHolders.put(title, holder);//holder filler
 
         holder.imageView.setImageResource(dictionaries[position].getImageResource());
         holder.textView.setText(title);
 
-        if(!isItemChecked){
-        if(title.equals(selectedDictionary)){
-            holder.radioButton.setChecked(true);
-            isItemChecked = true;
-        }}
+        if (!isItemChecked) {
+            if (title.equals(selectedDictionary)) {
+                holder.radioButton.setChecked(true);
+                isItemChecked = true;
+            }
+        }
 
         holder.radioButton.setOnClickListener(view -> {
             selectedDictionary = holder.textView.getText().toString();
 
-            if(viewHolders.containsKey(selectedDictionary)){
+            if (viewHolders.containsKey(selectedDictionary)) {
 
-                    for(ViewHolder vh : viewHolders.values()){
-                        vh.radioButton.setChecked(false);
-                        if(!vh.equals(holder))
-                            continue;
-                        vh.radioButton.setChecked(true);
-                    }
+                for (ViewHolder vh : viewHolders.values()) {
+                    vh.radioButton.setChecked(false);
+                    if (!vh.equals(holder))
+                        continue;
+                    vh.radioButton.setChecked(true);
+                }
 
                 onClicked.onClick(holder.getLayoutPosition());
             }
@@ -81,20 +84,20 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
 
     @Override
     public int getItemCount() {
-    return dictionaries.length;
+        return dictionaries.length;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-       public RadioButton radioButton;
-       public TextView textView;
-       public ImageView imageView;
+        public RadioButton radioButton;
+        public TextView textView;
+        public ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-           radioButton = itemView.findViewById(R.id.radioButtonForChoosingDictionary);
-           textView    = itemView.findViewById(R.id.textViewInEachItem);
-           imageView   = itemView.findViewById(R.id.imageViewInEachItem);
+            radioButton = itemView.findViewById(R.id.radioButtonForChoosingDictionary);
+            textView = itemView.findViewById(R.id.textViewInEachItem);
+            imageView = itemView.findViewById(R.id.imageViewInEachItem);
         }
     }
 

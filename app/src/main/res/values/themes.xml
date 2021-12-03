@@ -12,7 +12,6 @@
         <item name="colorOnSecondary">@color/lightblue900</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-
         <!-- Customize your theme here. -->
     </style>
 </resources>

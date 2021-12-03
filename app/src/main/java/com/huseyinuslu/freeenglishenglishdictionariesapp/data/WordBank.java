@@ -16,9 +16,10 @@ import java.util.concurrent.Future;
 public class WordBank {
     private final Context context;
 
-    public WordBank(Context context){
+    public WordBank(Context context) {
         this.context = context;
     }
+
     private final ExecutorService executor
             = Executors.newSingleThreadExecutor();
 
@@ -38,7 +39,7 @@ public class WordBank {
                 mLines.add(line);
             }
         } catch (IOException e) {
-           readLine(path);
+            readLine(path);
         }
 
         return executor.submit(() -> {

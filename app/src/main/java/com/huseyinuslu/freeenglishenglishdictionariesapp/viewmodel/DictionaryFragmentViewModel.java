@@ -15,8 +15,6 @@ import com.huseyinuslu.freeenglishenglishdictionariesapp.data.DictionaryData;
 import com.huseyinuslu.freeenglishenglishdictionariesapp.data.LinkType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -27,61 +25,61 @@ public class DictionaryFragmentViewModel extends ViewModel {
 
     private final MutableLiveData<String> word = getWord();
 
-    public LiveData<String> word(){
+    public LiveData<String> word() {
         refreshLink();
         return this.word;
     }
 
-            private MutableLiveData<String> getWord(){
-                if(word == null){
-                    return new MutableLiveData<String>("");
-                }else{
-                    return word;
-                }
-            }
+    private MutableLiveData<String> getWord() {
+        if (word == null) {
+            return new MutableLiveData<String>("");
+        } else {
+            return word;
+        }
+    }
 
-           public final List<String> wordList = new ArrayList<String>();
+    public final List<String> wordList = new ArrayList<String>();
 
     private final MutableLiveData<DataModel> selectedDictionaryItem = getSelectedDictionaryItem();
 
-    public LiveData<DataModel> selectedDictionaryItem(){
+    public LiveData<DataModel> selectedDictionaryItem() {
         return selectedDictionaryItem;
     }
 
     private MutableLiveData<DataModel> getSelectedDictionaryItem() {
 
-        if(selectedDictionaryItem == null){
+        if (selectedDictionaryItem == null) {
             return new MutableLiveData<DataModel>();
-        }else{
+        } else {
             return selectedDictionaryItem;
         }
     }
 
     public final MutableLiveData<Boolean> dictionaryListState = getDictionaryListState();
 
-    public void  setDictionaryListState(boolean aBoolean){
+    public void setDictionaryListState(boolean aBoolean) {
         dictionaryListState.setValue(aBoolean);
     }
 
     private MutableLiveData<Boolean> getDictionaryListState() {
-        if(dictionaryListState == null){
+        if (dictionaryListState == null) {
             return new MutableLiveData<Boolean>(true);
-        }else {
+        } else {
             return dictionaryListState;
         }
     }
 
-    private SharedPreferences sP  = null;
-    private Resources         res = null;
+    private SharedPreferences sP = null;
+    private Resources res = null;
 
     private final DataModel[] data = DictionaryData.getData();
 
     private MutableLiveData<Integer> selectedIndexNumber;
 
-    private MutableLiveData<Integer> getSelectedIndexNumber(int selectedNumber){
-        if(selectedIndexNumber == null){
+    private MutableLiveData<Integer> getSelectedIndexNumber(int selectedNumber) {
+        if (selectedIndexNumber == null) {
             return new MutableLiveData<Integer>(selectedNumber);
-        }else{
+        } else {
             return selectedIndexNumber;
         }
     }
@@ -92,25 +90,25 @@ public class DictionaryFragmentViewModel extends ViewModel {
         return fullLink;
     }
 
-    private MutableLiveData<String> getFullLink(DataModel data){
-        if(fullLink == null){
-            String link = res.getString(data.getLink(), getWordAccordingtoLink(data.getLinkType(),word.getValue())).toLowerCase(Locale.ROOT);
+    private MutableLiveData<String> getFullLink(DataModel data) {
+        if (fullLink == null) {
+            String link = res.getString(data.getLink(), getWordAccordingtoLink(data.getLinkType(), word.getValue())).toLowerCase(Locale.ROOT);
             return new MutableLiveData<String>(link);
-        }else{
+        } else {
             return fullLink;
         }
     }
 
     public void initialization(@NonNull Activity context) {
 
-        if(wordList.isEmpty())
+        if (wordList.isEmpty())
             wordList.addAll(DictionaryData.getWords());
 
-        if(sP == null)
-        sP = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+        if (sP == null)
+            sP = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
 
-        if(res == null)
-        res = context.getResources();
+        if (res == null)
+            res = context.getResources();
 
         selectedIndexNumber = getSelectedIndexNumber(sP.getInt(SHARED_INDEX_NUMBER_KEY, 0));
         selectedDictionaryItem.setValue(data[selectedIndexNumber.getValue()]);
@@ -121,6 +119,7 @@ public class DictionaryFragmentViewModel extends ViewModel {
     public void setIndexNumber(@NonNull int index) {
         selectedIndexNumber.setValue(index);
         selectedDictionaryItem.setValue(data[index]);
+        refreshLink();
         sP.edit().putInt(SHARED_INDEX_NUMBER_KEY, index).apply();
     }
 
@@ -130,23 +129,31 @@ public class DictionaryFragmentViewModel extends ViewModel {
 
     public void refreshLink() {
         DataModel data = selectedDictionaryItem.getValue();
-        String worD = word.getValue();
-        String link = res.getString(data.getLink(), getWordAccordingtoLink(data.getLinkType(),worD)).toLowerCase(Locale.ROOT);
+        String worD = getCorrectTypeWord(word.getValue());
+        String link = res.getString(data.getLink(), getWordAccordingtoLink(data.getLinkType(), worD)).toLowerCase(Locale.ROOT);
         fullLink.setValue(link);
     }
 
-    private String getWordAccordingtoLink(@NonNull LinkType type,@NonNull String word) {
+    public String getCorrectTypeWord(String item) {
+        String newItem = null;
+        if (item.endsWith(" ")) {
+            newItem = item.substring(0, item.length() - 1);
+        }
+        return newItem == null ? item : newItem;
+    }
 
-        switch (type){
-         case TWENTY_PERCENTAGE:
-             return word.replace(" ","%20");
-         case PLUS:
-             return word.replace(" ","+");
-         case HYPEN:
-             return word.replace(" ","-");
-         default:
-             return word.replace(" ","%20");
-     }
+    private String getWordAccordingtoLink(@NonNull LinkType type, @NonNull String word) {
+
+        switch (type) {
+            case TWENTY_PERCENTAGE:
+                return word.replace(" ", "%20");
+            case PLUS:
+                return word.replace(" ", "+");
+            case HYPEN:
+                return word.replace(" ", "-");
+            default:
+                return word.replace(" ", "%20");
+        }
 
     }
 }

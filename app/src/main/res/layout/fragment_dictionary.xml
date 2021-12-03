@@ -57,28 +57,31 @@
                     android:src="@drawable/cancel_button"
                     android:visibility="invisible" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInput_layout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_weight="10"
-                    android:elevation="20dp">
-
-                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                        android:id="@+id/edittext_you_can_search"
-                        android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInput_layout"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:completionThreshold="2"
-                        android:hint="@string/enter_word_hint_text"
-                        android:maxLength="25"
-                        android:onTextChanged="@{() -> fragment.updateWord()}"
-                        android:padding="15dp"
-                        android:singleLine="true"
-                        android:text="@{viewModel.word()}"
-                        android:textColor="?attr/colorSecondaryVariant"
-                        android:textStyle="bold" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_marginStart="15dp"
+                        android:layout_weight="10"
+                        app:endIconMode="clear_text"
+                        android:elevation="20dp">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/edittext_you_can_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:completionThreshold="2"
+                            android:hint="@string/enter_word_hint_text"
+                            android:maxLength="25"
+                            android:onTextChanged="@{() -> fragment.updateWord()}"
+                            android:padding="15dp"
+                            android:singleLine="true"
+                            android:text="@{viewModel.word()}"
+                            android:textColor="?attr/colorSecondaryVariant"
+                            android:textStyle="bold" >
+                        </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
                     android:layout_width="0dp"
@@ -93,19 +96,29 @@
             </LinearLayout>
         </FrameLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="10dp"
             android:layout_weight="5"
-            android:background="@drawable/bg_of_dictionary_list"
-            android:orientation="vertical">
+            android:background="@drawable/bg_of_dictionary_list">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:itemCount="7"
+                tools:listitem="@layout/item_of_dictionarieslist" />
 
             <FrameLayout
                 android:id="@+id/webViewerIndicator"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
                 tools:visibility="visible">
 
                 <WebView
@@ -113,7 +126,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:visibility="visible"
                     app:loadUrl="@{viewModel.fullLink()}" />
 
                 <LinearLayout
@@ -144,25 +156,13 @@
                         android:id="@+id/refreshIndicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="?attr/colorOnSecondary"
-                        android:visibility="gone" />
-
+                        android:backgroundTint="?attr/colorOnSecondary" />
                 </LinearLayout>
+
             </FrameLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:orientation="vertical"
-                android:visibility="visible"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                tools:itemCount="7"
-                tools:listitem="@layout/item_of_dictionarieslist" />
-        </LinearLayout>
+
+        </FrameLayout>
     </LinearLayout>
 
 </layout>
